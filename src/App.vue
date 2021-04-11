@@ -1,13 +1,18 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <Catalog />
   </div>
 </template>
 
 <script>
+import Catalog from '@/components/ProductList'
+
 
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    Catalog
+  }
 }
 </script>
 

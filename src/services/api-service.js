@@ -1,15 +1,9 @@
 import Vue from "vue";
 import axios from "axios";
-import VueAxios from "vue-axios";
 
 export const ApiService = {
-    init() {
-        Vue.use(VueAxios, axios);
-        Vue.axios.defaults.baseURL = 'http://localhost:8080';
-    },
-
-    get(resource, options) {
-        return Vue.axios.get(resource, options);
+    get(resource) {
+        return axios.get('http://localhost:8080/' + resource)
     },
 
     post(resource, value) {
