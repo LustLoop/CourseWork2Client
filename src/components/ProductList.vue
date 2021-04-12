@@ -28,7 +28,7 @@ export default {
     ]),
     prods() {
       return this.products;
-    }
+    },
   },
   methods: {
     writeShit() {
@@ -38,7 +38,6 @@ export default {
   mounted() {
     this.$store.dispatch(FETCH_PRODUCTS);
   }
-
 }
 </script>
 

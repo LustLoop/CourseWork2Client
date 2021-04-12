@@ -1,18 +1,13 @@
 <template>
   <div id="app">
-    <Catalog />
+    <router-view />
   </div>
 </template>
 
 <script>
-import Catalog from '@/components/ProductList'
-
 
 export default {
   name: 'App',
-  components: {
-    Catalog
-  }
 }
 </script>
 
@@ -23,6 +18,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 60px;
+  background-color: lightgray;
 }
 </style>

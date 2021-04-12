@@ -1,16 +1,20 @@
 <template>
-    <Card class="product-card" :title=product.title onclick="">
+    <Card class="product-card" :title=product.title @click="testRouter">
       <p class="product-type" v-if="getProductType" v-text="getProductType" />
       <p v-text="'Price: ' + product.price + ' UAH'" />
       <p v-if="getWorkType" v-text="'Type of work: ' + getWorkType" />
+      <router-view />
     </Card>
 </template>
 
 <script>
 import { Card } from 'ant-design-vue';
+import store from "@/store";
+import {GET_PRODUCT_INFO} from "@/store/actions.type";
 
 export default {
   name: "ProductListItem",
+  store,
   props: {
     product: {type: Object}
   },
@@ -39,6 +43,12 @@ export default {
         default:
           return null
       }
+    }
+  },
+  methods: {
+    testRouter() {
+      this.$store.dispatch(GET_PRODUCT_INFO, this.product.id);
+      this.$router.push('product/' + this.product.id);
     }
   }
 }
