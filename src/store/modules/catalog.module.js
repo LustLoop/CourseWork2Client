@@ -11,13 +11,16 @@ export const state = { ...initialState };
 
 export const actions = {
     async [FETCH_PRODUCTS](context) {
-        ApiService.getAll('products')
+        ApiService.get('products')
             .then((response) => {
                 context.commit(SET_PRODUCTS, response.data)
             });
     },
     async [GET_PRODUCT_INFO](context, payload) {
-        context.commit(SET_ACTIVE_PRODUCT, payload)
+        ApiService.get('products/product', payload)
+            .then((response) => {
+                context.commit(SET_ACTIVE_PRODUCT, response.data)
+            });
     }
 };
 
@@ -25,8 +28,8 @@ export const mutations = {
     [SET_PRODUCTS](state, products) {
         state.products = products;
     },
-    [SET_ACTIVE_PRODUCT](state, activeProductId) {
-        state.activeProduct = state.products[activeProductId];
+    [SET_ACTIVE_PRODUCT](state, activeProduct) {
+        state.activeProduct = activeProduct;
     }
 }
 

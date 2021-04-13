@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button type="primary" v-on:click="writeShit"> Add new product </Button>
+    <a-button type="primary" v-on:click="writeShit"> Add new product </a-button>
     <div class="product-list">
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
@@ -13,12 +13,10 @@ import store from "../store/index";
 import {mapGetters} from "vuex";
 import {FETCH_PRODUCTS} from "@/store/actions.type";
 import Product from "@/components/ProductListItem";
-import { Button } from 'ant-design-vue';
 
 export default {
   name: "ProductList",
   components: {
-    Button,
     Product
   },
   store,
