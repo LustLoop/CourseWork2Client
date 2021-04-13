@@ -1,6 +1,7 @@
 <template>
   <div>
     <a-button type="primary" v-on:click="writeShit"> Add new product </a-button>
+    <AddProductForm />
     <div class="product-list">
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
@@ -13,11 +14,13 @@ import store from "../store/index";
 import {mapGetters} from "vuex";
 import {FETCH_PRODUCTS} from "@/store/actions.type";
 import Product from "@/components/ProductListItem";
+import AddProductForm from "@/components/AddProductForm";
 
 export default {
   name: "ProductList",
   components: {
-    Product
+    Product,
+    AddProductForm
   },
   store,
   computed: {

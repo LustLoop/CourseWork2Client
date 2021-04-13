@@ -27,8 +27,10 @@ export default {
 <style scoped>
   .product {
     width: 80%;
+
     height: 70rem;
-    background-color: #234234;
+    background-color: white;
     margin: 0 auto;
+    border-radius: 1rem;
   }
 </style>
