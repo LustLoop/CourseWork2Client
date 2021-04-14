@@ -1,7 +1,7 @@
 <template>
   <div>
-    <a-button type="primary" v-on:click="writeShit"> Add new product </a-button>
-    <AddProductForm />
+    <a-button type="primary" v-on:click="switchAddFormVisibility"> Add new product </a-button>
+    <AddProductForm v-if="formVisible" />
     <div class="product-list">
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
@@ -18,6 +18,11 @@ import AddProductForm from "@/components/AddProductForm";
 
 export default {
   name: "ProductList",
+  data() {
+    return {
+      formVisible: false
+    }
+  },
   components: {
     Product,
     AddProductForm
@@ -32,8 +37,8 @@ export default {
     },
   },
   methods: {
-    writeShit() {
-      console.log('Shit')
+    switchAddFormVisibility() {
+      this.formVisible = !this.formVisible
     }
   },
   mounted() {

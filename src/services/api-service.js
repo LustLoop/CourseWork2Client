@@ -1,4 +1,3 @@
-import Vue from "vue";
 import axios from "axios";
 
 const url = 'http://localhost:8080/';
@@ -13,6 +12,7 @@ export const ApiService = {
     },
 
     post(resource, value) {
-        return Vue.axios.post(url + resource, value)
+        console.log(value)
+        return axios.post(url + resource, value)
     }
 }
