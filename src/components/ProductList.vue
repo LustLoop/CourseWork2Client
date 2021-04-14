@@ -5,6 +5,7 @@
     <div class="product-list">
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
+    <a-pagination :total="50" show-less-items @change="updatePageProducts" />
   </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
   name: "ProductList",
   data() {
     return {
-      formVisible: false
+      formVisible: false,
+      visibleProducts: []
     }
   },
   components: {
@@ -39,10 +41,13 @@ export default {
   methods: {
     switchAddFormVisibility() {
       this.formVisible = !this.formVisible
+    },
+    updatePageProducts(pageNumber) {
+      this.$store.dispatch(FETCH_PRODUCTS, pageNumber);
     }
   },
   mounted() {
-    this.$store.dispatch(FETCH_PRODUCTS);
+    this.$store.dispatch(FETCH_PRODUCTS, 1);
   }
 }
 </script>
