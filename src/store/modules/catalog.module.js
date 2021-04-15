@@ -11,9 +11,9 @@ export const state = { ...initialState };
 
 export const actions = {
     async [FETCH_PRODUCTS](context, payload) {
-        ApiService.get('products')
+        ApiService.get('products/page', payload)
             .then((response) => {
-                context.commit(SET_PRODUCTS, response.data.slice(3 * (payload - 1), 3 * payload))
+                context.commit(SET_PRODUCTS, response.data)
             });
     },
     async [GET_PRODUCT_INFO](context, payload) {
