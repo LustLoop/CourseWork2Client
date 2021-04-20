@@ -1,5 +1,6 @@
 <template>
   <div>
+    <SearchField />
     <a-button type="primary" v-on:click="switchAddFormVisibility"> Add new product </a-button>
     <AddProductForm v-if="formVisible" />
     <div class="product-list">
@@ -16,6 +17,7 @@ import {mapGetters} from "vuex";
 import {FETCH_PRODUCTS} from "@/store/actions.type";
 import Product from "@/components/ProductListItem";
 import AddProductForm from "@/components/AddProductForm";
+import SearchField from "@/components/SearchField";
 
 export default {
   name: "ProductList",
@@ -27,7 +29,8 @@ export default {
   },
   components: {
     Product,
-    AddProductForm
+    AddProductForm,
+    SearchField
   },
   store,
   computed: {

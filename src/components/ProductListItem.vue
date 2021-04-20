@@ -65,7 +65,7 @@ export default {
     background-color: #F64C74;
     padding: 0.5rem;
     width: auto;
-    border-radius: 1rem;
+    border-radius: 3px;
   }
 
 </style>
