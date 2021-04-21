@@ -47,7 +47,10 @@ export default {
     },
     updatePageProducts(pageNumber) {
       this.$store.dispatch(FETCH_PRODUCTS, pageNumber);
-    }
+    },
+    // getPagesCount() {
+    //   Math.ceil(this.products.length / 6) * 10;
+    // }
   },
   mounted() {
     this.$store.dispatch(FETCH_PRODUCTS, 1);

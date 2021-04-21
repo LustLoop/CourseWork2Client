@@ -51,7 +51,7 @@
         <a-slider
             range
             :min="0"
-            :max="100000"
+            :max="1000000"
             v-decorator="['priceRange']"
             @change="changePriceRange"
         />
@@ -64,11 +64,14 @@
 
 <script>
 
+
+import {ADD_FILTERS, FETCH_PRODUCTS} from "@/store/actions.type";
+
 export default {
   name: "SearchField",
   data() {
     return {
-      sliderValue: [0, 0],
+      sliderValue: [0, 1000000],
       advancedSearch: false,
       advancedSearchButtonTitle: "Advanced search",
       form: this.$form.createForm(this, { name: 'coordinated' }),
@@ -80,12 +83,14 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           if (this.advancedSearch) {
-            console.log('Received values of form: ', values);
+            this.$store.dispatch(ADD_FILTERS, values);
+            this.$store.dispatch(FETCH_PRODUCTS, 1);
           } else {
-            console.log({title: values.title})
+            this.$store.dispatch(ADD_FILTERS, {title: values.title});
+            this.$store.dispatch(FETCH_PRODUCTS, 1);
           }
         }
-      });
+      })
     },
     handleChangeOfSearchMode(value) {
       this.type = value
