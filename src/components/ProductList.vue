@@ -3,6 +3,18 @@
     <SearchField />
     <a-button type="primary" v-on:click="switchAddFormVisibility"> Add new product </a-button>
     <AddProductForm v-if="formVisible" />
+    <br />
+    <a-select default-value="name" @change="changeTypeOfSort" style="width: 10rem;">
+      <a-select-option value="name">
+        By name
+      </a-select-option>
+      <a-select-option value="price">
+        By price
+      </a-select-option>
+      <a-select-option value="efficiency">
+        By efficiency
+      </a-select-option>
+    </a-select>
     <div class="product-list">
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
@@ -14,7 +26,7 @@
 
 import store from "../store/index";
 import {mapGetters} from "vuex";
-import {FETCH_PRODUCTS} from "@/store/actions.type";
+import {CHANGE_SORT_TYPE, FETCH_PRODUCTS} from "@/store/actions.type";
 import Product from "@/components/ProductListItem";
 import AddProductForm from "@/components/AddProductForm";
 import SearchField from "@/components/SearchField";
@@ -48,9 +60,10 @@ export default {
     updatePageProducts(pageNumber) {
       this.$store.dispatch(FETCH_PRODUCTS, pageNumber);
     },
-    // getPagesCount() {
-    //   Math.ceil(this.products.length / 6) * 10;
-    // }
+    changeTypeOfSort(sortType) {
+      this.$store.dispatch(CHANGE_SORT_TYPE, sortType);
+      this.$store.dispatch(FETCH_PRODUCTS, 1);
+    }
   },
   mounted() {
     this.$store.dispatch(FETCH_PRODUCTS, 1);

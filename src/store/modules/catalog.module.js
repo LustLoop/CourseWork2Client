@@ -1,19 +1,26 @@
-import {ADD_FILTERS, ADD_NEW_PRODUCT, FETCH_PRODUCTS, GET_PRODUCT_INFO} from "../actions.type";
+import {ADD_FILTERS, ADD_NEW_PRODUCT, CHANGE_SORT_TYPE, FETCH_PRODUCTS, GET_PRODUCT_INFO} from "../actions.type";
 import {ApiService} from "@/services/api-service";
-import {RESET_FILTERS, SET_ACTIVE_PRODUCT, SET_FILTERS, SET_NEW_PRODUCT, SET_PRODUCTS} from "../mutations.type";
+import {
+    RESET_FILTERS,
+    SET_ACTIVE_PRODUCT,
+    SET_FILTERS,
+    SET_NEW_PRODUCT,
+    SET_PRODUCTS,
+    SET_SORT_TYPE
+} from "../mutations.type";
 
 const initialState = {
     products: [],
     activeProduct: {},
-    filters: {}
+    filters: {},
+    sortType: 'name'
 };
 
 export const state = { ...initialState };
 
 export const actions = {
     async [FETCH_PRODUCTS]({getters, commit}, payload) {
-        console.log(getters.filters)
-        ApiService.get('products/page', payload, getters.filters)
+        ApiService.get('products/page', payload, getters.filters, getters.sortType)
             .then((response) => {
                 commit(SET_PRODUCTS, response.data)
             });
@@ -32,6 +39,9 @@ export const actions = {
     },
     async [ADD_FILTERS](context, payload) {
         context.commit(SET_FILTERS, payload)
+    },
+    async [CHANGE_SORT_TYPE](context, payload) {
+        context.commit(SET_SORT_TYPE, payload)
     }
 };
 
@@ -46,19 +56,21 @@ export const mutations = {
         state.products = state.products.push(newProduct);
     },
     [SET_FILTERS](state, filters) {
-        console.log(filters)
         let filter = {
             title: filters.title,
             types: []
         };
-        filters.tool ? filter.types.push('tool') : null;
-        filters.worktable ? filter.types.push('worktable') : null;
-        filters.priceRange !== undefined ||  filters.priceRange !== [0, 0] ? filter.startPriceRange = filters.priceRange[0] : null;
-        filters.priceRange !== undefined ||  filters.priceRange !== [0, 0] ? filter.endPriceRange = filters.priceRange[1] : null;
+        filters.tool ? filter.types.push('1') : null;
+        filters.worktable ? filter.types.push('2') : null;
+        filters.priceRange !== undefined ? filter.startPriceRange = filters.priceRange[0] : null;
+        filters.priceRange !== undefined ? filter.endPriceRange = filters.priceRange[1] : null;
         state.filters = filter;
     },
     [RESET_FILTERS](state) {
         state.filters = {};
+    },
+    [SET_SORT_TYPE](state, sortType) {
+        state.sortType = sortType;
     }
 }
 
@@ -71,6 +83,9 @@ export const getters = {
     },
     filters(state) {
         return state.filters;
+    },
+    sortType(state) {
+        return state.sortType;
     }
 }
 
