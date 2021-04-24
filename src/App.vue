@@ -20,5 +20,6 @@ export default {
   color: #2c3e50;
   padding: 60px;
   background-color: lightgray;
+  min-height: 100vh;
 }
 </style>

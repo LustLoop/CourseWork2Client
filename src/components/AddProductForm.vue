@@ -1,5 +1,5 @@
 <template>
-  <a-form class="product-form" :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
+  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
     <a-form-item label="Title">
       <a-input
         v-decorator="[
@@ -7,6 +7,16 @@
           { rules: [{ required: true, message: 'Please enter title' }] }
         ]"
           placeholder="Grinding machine 2000"
+      />
+    </a-form-item>
+    <a-form-item label="Description">
+      <a-textarea
+          :auto-size="{ minRows: 1, maxRows: 5 }"
+          v-decorator="[
+          'description',
+          { rules: [{ required: true, message: 'Please enter description' }] }
+        ]"
+          placeholder="Basic product description"
       />
     </a-form-item>
     <a-form-item label="Price">
@@ -61,7 +71,7 @@
         'electricityConsumes',
         { rules: [{ required: this.type === 'WORKTABLE', message: 'Please enter electricity consumes of this product' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -69,10 +79,10 @@
       <a-input
           @keypress="onlyForNumbers"
           v-decorator="[
-        'timeConsumes',
+        'timeConsumesForOneUnit',
         { rules: [{ required: this.type === 'WORKTABLE', message: 'Please enter time needed for one unit of product' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -103,7 +113,7 @@
         'gasConsumes',
         { rules: [{ required: this.worktableType === 'PLASMIC', message: 'Please gas usage for one unit' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -114,7 +124,7 @@
         'cartridgeConsumes',
         { rules: [{ required: this.worktableType === 'LASER', message: 'Please enter cost of cartridge' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="45"
       >
       </a-input>
     </a-form-item>
@@ -125,7 +135,7 @@
         'cartridgeUsageTimes',
         { rules: [{ required: this.worktableType === 'LASER', message: 'Please enter how many times cartridge can be used' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="7"
       >
       </a-input>
     </a-form-item>
@@ -196,11 +206,12 @@
         Submit
       </a-button>
     </a-form-item>
-
   </a-form>
 </template>
 
 <script>
+import {ADD_NEW_PRODUCT} from "@/store/actions.type";
+
 export default {
   name: "AddProductForm",
   data() {
@@ -217,6 +228,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          this.$store.dispatch(ADD_NEW_PRODUCT, values);
         }
       });
     },
@@ -242,9 +254,10 @@ export default {
 
 <style scoped>
   form {
-    text-align: center;
-  }
-  .product-form {
-    background-color: #2c3e50;
+    width: 60%;
+    margin: 3rem auto;
+    padding: 2rem 2rem 2rem 8rem;
+    background-color: white;
+    border-radius: 1rem;
   }
 </style>

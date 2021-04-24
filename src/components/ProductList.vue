@@ -1,10 +1,26 @@
 <template>
   <div>
-    <a-button type="primary" v-on:click="writeShit"> Add new product </a-button>
-    <AddProductForm />
+    <SearchField />
+    <a-button type="primary" v-on:click="switchAddFormVisibility"> Add new product </a-button>
+    <AddProductForm v-if="formVisible" />
     <div class="product-list">
+      <a-select class="sort-button" default-value="name" @change="changeTypeOfSort" style="width: 10rem;">
+        <a-select-option value="name">
+          By name
+        </a-select-option>
+        <a-select-option value="price">
+          By price <a-icon type="arrow-up" />
+        </a-select-option>
+        <a-select-option value="priceDesc">
+          By price <a-icon type="arrow-down" />
+        </a-select-option>
+        <a-select-option value="efficiency">
+          By efficiency
+        </a-select-option>
+      </a-select>
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
+    <a-pagination :total="50" show-less-items @change="updatePageProducts" />
   </div>
 </template>
 
@@ -12,15 +28,23 @@
 
 import store from "../store/index";
 import {mapGetters} from "vuex";
-import {FETCH_PRODUCTS} from "@/store/actions.type";
+import {CHANGE_SORT_TYPE, FETCH_PRODUCTS} from "@/store/actions.type";
 import Product from "@/components/ProductListItem";
 import AddProductForm from "@/components/AddProductForm";
+import SearchField from "@/components/SearchField";
 
 export default {
   name: "ProductList",
+  data() {
+    return {
+      formVisible: false,
+      visibleProducts: []
+    }
+  },
   components: {
     Product,
-    AddProductForm
+    AddProductForm,
+    SearchField
   },
   store,
   computed: {
@@ -32,12 +56,19 @@ export default {
     },
   },
   methods: {
-    writeShit() {
-      console.log('Shit')
+    switchAddFormVisibility() {
+      this.formVisible = !this.formVisible
+    },
+    updatePageProducts(pageNumber) {
+      this.$store.dispatch(FETCH_PRODUCTS, pageNumber);
+    },
+    changeTypeOfSort(sortType) {
+      this.$store.dispatch(CHANGE_SORT_TYPE, sortType);
+      this.$store.dispatch(FETCH_PRODUCTS, 1);
     }
   },
   mounted() {
-    this.$store.dispatch(FETCH_PRODUCTS);
+    this.$store.dispatch(FETCH_PRODUCTS, 1);
   }
 }
 </script>
@@ -49,5 +80,10 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 3rem 15%;
+  }
+
+  .sort-button {
+    width: 100%;
+    margin-left: 75%;
   }
 </style>
