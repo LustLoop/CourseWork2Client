@@ -6,6 +6,7 @@
 
 <script>
 import {mapGetters} from "vuex";
+import {GET_PRODUCT_INFO} from "@/store/actions.type";
 
 export default {
   name: "Product",
@@ -16,6 +17,9 @@ export default {
     title() {
       return this.activeProduct?.title
     }
+  },
+  mounted() {
+    this.$store.dispatch(GET_PRODUCT_INFO, this.$route.query.id);
   }
 }
 </script>
@@ -23,8 +27,10 @@ export default {
 <style scoped>
   .product {
     width: 80%;
+
     height: 70rem;
-    background-color: #234234;
+    background-color: white;
     margin: 0 auto;
+    border-radius: 1rem;
   }
 </style>

@@ -9,7 +9,7 @@ const router = new VueRouter({
             component: ProductList,
         },
         {
-            path: '/product/:id',
+            path: '/products',
             component: Product
         }
     ]

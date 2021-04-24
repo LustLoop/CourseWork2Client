@@ -10,7 +10,6 @@
 <script>
 import { Card } from 'ant-design-vue';
 import store from "@/store";
-import {GET_PRODUCT_INFO} from "@/store/actions.type";
 
 export default {
   name: "ProductListItem",
@@ -47,8 +46,7 @@ export default {
   },
   methods: {
     testRouter() {
-      this.$store.dispatch(GET_PRODUCT_INFO, this.product.id);
-      this.$router.push('product/' + this.product.id);
+      this.$router.push({path: 'products', query: {id: this.product.id}});
     }
   }
 }
