@@ -9,6 +9,16 @@
           placeholder="Grinding machine 2000"
       />
     </a-form-item>
+    <a-form-item label="Description">
+      <a-textarea
+          :auto-size="{ minRows: 1, maxRows: 5 }"
+          v-decorator="[
+          'description',
+          { rules: [{ required: true, message: 'Please enter description' }] }
+        ]"
+          placeholder="Basic product description"
+      />
+    </a-form-item>
     <a-form-item label="Price">
       <a-input
           @keypress="onlyForNumbers"
@@ -61,7 +71,7 @@
         'electricityConsumes',
         { rules: [{ required: this.type === 'WORKTABLE', message: 'Please enter electricity consumes of this product' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -69,10 +79,10 @@
       <a-input
           @keypress="onlyForNumbers"
           v-decorator="[
-        'timeConsumes',
+        'timeConsumesForOneUnit',
         { rules: [{ required: this.type === 'WORKTABLE', message: 'Please enter time needed for one unit of product' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -103,7 +113,7 @@
         'gasConsumes',
         { rules: [{ required: this.worktableType === 'PLASMIC', message: 'Please gas usage for one unit' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="123.69"
       >
       </a-input>
     </a-form-item>
@@ -114,7 +124,7 @@
         'cartridgeConsumes',
         { rules: [{ required: this.worktableType === 'LASER', message: 'Please enter cost of cartridge' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="45"
       >
       </a-input>
     </a-form-item>
@@ -125,7 +135,7 @@
         'cartridgeUsageTimes',
         { rules: [{ required: this.worktableType === 'LASER', message: 'Please enter how many times cartridge can be used' }] },
         ]"
-          placeholder="Select an option"
+          placeholder="7"
       >
       </a-input>
     </a-form-item>

@@ -1,8 +1,9 @@
 <template>
-    <Card class="product-card" :title=product.title @click="testRouter">
+    <Card class="product-card" :title=product.title @click="goToDetails">
       <p class="product-type" v-if="getProductType" v-text="getProductType" />
       <p v-text="'Price: ' + product.price + ' UAH'" />
       <p v-if="getWorkType" v-text="'Type of work: ' + getWorkType" />
+      <p v-text="'Description: ' + formatDescription(product.description)" />
       <router-view />
     </Card>
 </template>
@@ -45,8 +46,16 @@ export default {
     }
   },
   methods: {
-    testRouter() {
+    goToDetails() {
       this.$router.push({path: 'products', query: {id: this.product.id}});
+    },
+    formatDescription(description) {
+      if (description.length > 250)
+      {
+        return description.slice(0, 250) + "...";
+      } else {
+        return description;
+      }
     }
   }
 }

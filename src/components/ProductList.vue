@@ -3,19 +3,21 @@
     <SearchField />
     <a-button type="primary" v-on:click="switchAddFormVisibility"> Add new product </a-button>
     <AddProductForm v-if="formVisible" />
-    <br />
-    <a-select default-value="name" @change="changeTypeOfSort" style="width: 10rem;">
-      <a-select-option value="name">
-        By name
-      </a-select-option>
-      <a-select-option value="price">
-        By price
-      </a-select-option>
-      <a-select-option value="efficiency">
-        By efficiency
-      </a-select-option>
-    </a-select>
     <div class="product-list">
+      <a-select class="sort-button" default-value="name" @change="changeTypeOfSort" style="width: 10rem;">
+        <a-select-option value="name">
+          By name
+        </a-select-option>
+        <a-select-option value="price">
+          By price <a-icon type="arrow-up" />
+        </a-select-option>
+        <a-select-option value="priceDesc">
+          By price <a-icon type="arrow-down" />
+        </a-select-option>
+        <a-select-option value="efficiency">
+          By efficiency
+        </a-select-option>
+      </a-select>
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
     <a-pagination :total="50" show-less-items @change="updatePageProducts" />
@@ -78,5 +80,10 @@ export default {
     justify-content: space-around;
     flex-wrap: wrap;
     margin: 3rem 15%;
+  }
+
+  .sort-button {
+    width: 100%;
+    margin-left: 75%;
   }
 </style>

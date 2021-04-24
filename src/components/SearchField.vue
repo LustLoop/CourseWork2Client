@@ -2,7 +2,7 @@
   <a-form class="search-form" :form="form" @submit="handleSubmit">
     <a-form-item class="search-field">
       <a-input
-          style="width: 30rem"
+          style="width: 90%"
           v-decorator="[
           'title',
           { rules: [{ required: true, message: 'Enter the title' }] }
