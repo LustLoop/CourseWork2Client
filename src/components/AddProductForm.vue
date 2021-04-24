@@ -1,5 +1,5 @@
 <template>
-  <a-form class="product-form" :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
+  <a-form :form="form" :label-col="{ span: 5 }" :wrapper-col="{ span: 10 }" @submit="handleSubmit">
     <a-form-item label="Title">
       <a-input
         v-decorator="[
@@ -196,11 +196,12 @@
         Submit
       </a-button>
     </a-form-item>
-
   </a-form>
 </template>
 
 <script>
+import {ADD_NEW_PRODUCT} from "@/store/actions.type";
+
 export default {
   name: "AddProductForm",
   data() {
@@ -217,6 +218,7 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
+          this.$store.dispatch(ADD_NEW_PRODUCT, values);
         }
       });
     },
@@ -242,9 +244,10 @@ export default {
 
 <style scoped>
   form {
-    text-align: center;
-  }
-  .product-form {
-    background-color: #2c3e50;
+    width: 60%;
+    margin: 3rem auto;
+    padding: 2rem 2rem 2rem 8rem;
+    background-color: white;
+    border-radius: 1rem;
   }
 </style>
