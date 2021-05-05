@@ -1,9 +1,10 @@
 <template>
-    <Card class="product-card" :title=product.title @click="goToDetails">
-      <p class="product-type" v-if="getProductType" v-text="getProductType" />
+    <Card class="product-card" :title=product.title>
+      <a-tag slot="extra" color="red" v-if="getProductType" v-text="getProductType" />
       <p v-text="'Price: ' + product.price + ' UAH'" />
       <p v-if="getWorkType" v-text="'Type of work: ' + getWorkType" />
       <p v-text="'Description: ' + formatDescription(product.description)" />
+      <a-button @click="goToDetails">Details</a-button>
       <router-view />
     </Card>
 </template>

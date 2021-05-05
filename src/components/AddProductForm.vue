@@ -201,8 +201,14 @@
         Rechargeable
       </a-checkbox>
     </a-form-item>
+    <a-upload
+        name="file"
+        :customRequest="handleRequest"
+    >
+      <a-button style="margin: 1rem 1rem 1rem -50%"> <a-icon type="upload" /> Upload </a-button>
+    </a-upload>
     <a-form-item :wrapper-col="{ span: 12, offset: 5 }">
-      <a-button type="primary" html-type="submit">
+      <a-button style="margin-top: 1rem" type="primary" html-type="submit">
         Submit
       </a-button>
     </a-form-item>
@@ -212,14 +218,26 @@
 <script>
 import {ADD_NEW_PRODUCT} from "@/store/actions.type";
 
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
 export default {
   name: "AddProductForm",
   data() {
     return {
+      file: null,
       type: null,
       worktableType: null,
       toolType: null,
       form: this.$form.createForm(this, { name: 'coordinated' }),
+      previewImage: '',
+      fileList: ''
     };
   },
   methods: {
@@ -241,14 +259,27 @@ export default {
     handleSelectToolTypeChange(value) {
       this.toolType = value
     },
-    onlyForNumbers ($event) {
+    onlyForNumbers($event) {
       let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
 
-      if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 )) {
+      if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46)) {
         $event.preventDefault();
       }
-    }
-  },
+    },
+    async handleRequest(data) {
+      let file = data.file
+      const checkIfLoaded = async () => {
+        setTimeout(async () => {
+          if(file === undefined) {
+            await checkIfLoaded()
+          } else {
+            this.file = await getBase64(file)
+          }
+        })
+      }
+      await checkIfLoaded()
+    },
+  }
 }
 </script>
 

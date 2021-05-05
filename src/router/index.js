@@ -3,6 +3,7 @@ import ProductList from "@/components/ProductList";
 import Product from "@/components/Product";
 
 const router = new VueRouter({
+    mode: 'history',
     routes: [
         {
             path: '/',

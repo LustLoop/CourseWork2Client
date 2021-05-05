@@ -5,7 +5,7 @@
           style="width: 90%"
           v-decorator="[
           'title',
-          { rules: [{ required: true, message: 'Enter the title' }] }
+          { rules: [{ required: false, message: 'Enter the title' }] }
         ]"
           placeholder="Search by title"
       >
@@ -86,7 +86,8 @@ export default {
             this.$store.dispatch(ADD_FILTERS, values);
             this.$store.dispatch(FETCH_PRODUCTS, 1);
           } else {
-            this.$store.dispatch(ADD_FILTERS, {title: values.title});
+            console.log(values.title)
+            this.$store.dispatch(ADD_FILTERS, {title: values.title===undefined?"":values.title});
             this.$store.dispatch(FETCH_PRODUCTS, 1);
           }
         }
