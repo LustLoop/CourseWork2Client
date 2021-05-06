@@ -4,7 +4,7 @@ import {
     RESET_FILTERS,
     SET_ACTIVE_PRODUCT,
     SET_FILTERS,
-    SET_NEW_PRODUCT,
+    SET_NEW_PRODUCT, SET_PAGES,
     SET_PRODUCTS,
     SET_SORT_TYPE
 } from "../mutations.type";
@@ -13,7 +13,8 @@ const initialState = {
     products: [],
     activeProduct: {},
     filters: {},
-    sortType: 'name'
+    sortType: 'name',
+    pages: 1
 };
 
 export const state = { ...initialState };
@@ -23,6 +24,10 @@ export const actions = {
         ApiService.get('products/page', payload, getters.filters, getters.sortType)
             .then((response) => {
                 commit(SET_PRODUCTS, response.data)
+            });
+        ApiService.get('products/countPages', payload, getters.filters, getters.sortType)
+            .then((response) => {
+                commit(SET_PAGES, response.data)
             });
     },
     async [GET_PRODUCT_INFO](context, payload) {
@@ -71,6 +76,9 @@ export const mutations = {
     },
     [SET_SORT_TYPE](state, sortType) {
         state.sortType = sortType;
+    },
+    [SET_PAGES](state, pages) {
+        state.pages = Math.ceil(pages / 6);
     }
 }
 
@@ -86,6 +94,9 @@ export const getters = {
     },
     sortType(state) {
         return state.sortType;
+    },
+    pages(state) {
+        return state.pages;
     }
 }
 

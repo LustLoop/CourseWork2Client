@@ -18,7 +18,6 @@ export const ApiService = {
     },
 
     post(resource, value) {
-        console.log(value)
         return axios.post(url + resource, value)
     }
 }

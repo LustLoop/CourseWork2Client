@@ -20,7 +20,7 @@
       </a-select>
       <Product v-for="(product, index) in products" :product="product" :key="index" />
     </div>
-    <a-pagination :total="50" show-less-items @change="updatePageProducts" />
+    <a-pagination :total="pages * 10" show-less-items @change="updatePageProducts" />
   </div>
 </template>
 
@@ -37,8 +37,7 @@ export default {
   name: "ProductList",
   data() {
     return {
-      formVisible: false,
-      visibleProducts: []
+      formVisible: false
     }
   },
   components: {
@@ -49,11 +48,15 @@ export default {
   store,
   computed: {
     ...mapGetters([
-        'products'
+        'products',
+        'pages'
     ]),
     prods() {
       return this.products;
     },
+    pgs() {
+      return this.pages;
+    }
   },
   methods: {
     switchAddFormVisibility() {

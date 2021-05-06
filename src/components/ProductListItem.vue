@@ -1,6 +1,7 @@
 <template>
     <Card class="product-card" :title=product.title>
       <a-tag slot="extra" color="red" v-if="getProductType" v-text="getProductType" />
+      <img :src="product.image" alt="" style="float: right; margin: 0 0 1rem 2rem" width="40%"/>
       <p v-text="'Price: ' + product.price + ' UAH'" />
       <p v-if="getWorkType" v-text="'Type of work: ' + getWorkType" />
       <p v-text="'Description: ' + formatDescription(product.description)" />

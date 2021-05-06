@@ -1,5 +1,6 @@
 <template>
   <div class="product">
+    <img :src="activeProduct.image" style="float: right" width="40%">
     <h1>Title: {{activeProduct.title}}</h1>
     <h2>Price: {{activeProduct.price}}</h2>
     <p>Accuracy: {{activeProduct.accuracy}} </p>

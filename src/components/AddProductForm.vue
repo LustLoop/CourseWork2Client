@@ -202,7 +202,7 @@
       </a-checkbox>
     </a-form-item>
     <a-upload
-        name="file"
+        name="image"
         :customRequest="handleRequest"
     >
       <a-button style="margin: 1rem 1rem 1rem -50%"> <a-icon type="upload" /> Upload </a-button>
@@ -218,10 +218,10 @@
 <script>
 import {ADD_NEW_PRODUCT} from "@/store/actions.type";
 
-function getBase64(file) {
+function getBase64(image) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(image);
     reader.onload = () => resolve(reader.result);
     reader.onerror = error => reject(error);
   });
@@ -231,13 +231,11 @@ export default {
   name: "AddProductForm",
   data() {
     return {
-      file: null,
+      image: null,
       type: null,
       worktableType: null,
       toolType: null,
       form: this.$form.createForm(this, { name: 'coordinated' }),
-      previewImage: '',
-      fileList: ''
     };
   },
   methods: {
@@ -246,7 +244,9 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log('Received values of form: ', values);
-          this.$store.dispatch(ADD_NEW_PRODUCT, values);
+          const image = this.image
+          const payload = {...values, image}
+          this.$store.dispatch(ADD_NEW_PRODUCT, payload);
         }
       });
     },
@@ -267,13 +267,13 @@ export default {
       }
     },
     async handleRequest(data) {
-      let file = data.file
+      let image = data.file
       const checkIfLoaded = async () => {
         setTimeout(async () => {
-          if(file === undefined) {
+          if(image === undefined) {
             await checkIfLoaded()
           } else {
-            this.file = await getBase64(file)
+            this.image = await getBase64(image)
           }
         })
       }
